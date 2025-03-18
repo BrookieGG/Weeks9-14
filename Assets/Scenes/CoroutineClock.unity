@@ -761,6 +761,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clock: {fileID: 58162299}
+  source: {fileID: 647898702}
+  clip: {fileID: 8300000, guid: 4fd926af1e936314c9de00ec09b1bb7e, type: 3}
+  bird: {fileID: 8150092410357856045, guid: 0febc7402eba85249801998e3a28cc86, type: 3}
 --- !u!1 &1002061468
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,9 @@ using UnityEngine;
 public class Chimes : MonoBehaviour
 {
     public CoroutineClock clock;
+    public AudioSource source;
+    public AudioClip clip;
+    public GameObject bird;
 
     private void Start()
     {
@@ -14,6 +17,9 @@ public class Chimes : MonoBehaviour
     public void Chime(int hour)
     {
         Debug.Log("Chiming " + hour + "o'clock !");
+        source.PlayOneShot(clip);
+        GameObject cuckoo = Instantiate(bird, transform.position, Quaternion.identity);
+        Destroy(cuckoo, 2);
     }
 
     public void ChimeWithoutArguments()
