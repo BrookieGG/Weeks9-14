@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 918086385}
   - component: {fileID: 918086384}
   - component: {fileID: 918086383}
+  - component: {fileID: 918086386}
   m_Layer: 0
   m_Name: knight
   m_TagString: Untagged
@@ -418,10 +419,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  speedy: 2
   footstep: {fileID: 8300000, guid: 989a98f10f6bb774e8bd44283ba14238, type: 3}
   footstepSource: {fileID: 223394236}
-  impulse: {fileID: 0}
 --- !u!212 &918086384
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -489,6 +488,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &918086386
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 918086382}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cc4bd64be5f7cfb459b0e3a84da5e2ca, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1008052324
 GameObject:
   m_ObjectHideFlags: 0
