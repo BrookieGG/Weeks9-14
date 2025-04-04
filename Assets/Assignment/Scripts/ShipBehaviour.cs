@@ -13,6 +13,7 @@ public class ShipBehaviour : MonoBehaviour
     private Coroutine obstacleSpawn;
     private IEnumerator spawnObject;
     private int scoreValue = 0;
+    private float TimeValue = 30;
 
     public float t;
     public float timeToSpawn = 5;
@@ -25,18 +26,14 @@ public class ShipBehaviour : MonoBehaviour
     public UnityEvent starEvent;
     public UnityEvent blackholeEvent;
     public TMP_Text score;
+    public TMP_Text Timer;
     public GameObject GameOver;
   
 
     // Start is called before the first frame update
     void Start()
     {
-        if (!enabled) return;
-        {
-            starEvent.AddListener(starInteract);
-            blackholeEvent.AddListener(EndGame);
-            obstacleSpawn = StartCoroutine(SpawnTheObstacles());
-        }
+        this.enabled = false;
         
     }
 
@@ -65,17 +62,44 @@ public class ShipBehaviour : MonoBehaviour
 
         
 
-        if (movement != Vector2.zero)
+       
+            float maxTilt = 30f;
+            float tilt = Mathf.Clamp(movement.x * 100f, -maxTilt, maxTilt);
+            Quaternion targetRotation = Quaternion.Euler(0f, 0f, -tilt);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        
+
+        transform.position += (Vector3)movement;
+
+        // Clamp Y position to stay on screen vertically
+        Vector3 clampedPosition = transform.position;
+        clampedPosition.y = Mathf.Clamp(clampedPosition.y, -4.5f, 4.5f);
+        transform.position = clampedPosition;
+
+        if (TimeValue > 0)
         {
-            float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle - 30f); // Adjust as needed
+            TimeValue -= Time.deltaTime;
+            Timer.text = "Time: " + Mathf.FloorToInt(TimeValue);
         }
 
+        if (TimeValue < 0)
+        {
+            Timer.text = "Time: 0";
+            EndGame();
+        }
+
+    }
+
+    public void BeginGame()
+    {
+        starEvent.AddListener(starInteract);
+        blackholeEvent.AddListener(EndGame);
+        obstacleSpawn = StartCoroutine(SpawnTheObstacles());
     }
     public void Launch()
     {
         ship.GetComponent<ShipBehaviour>().enabled = true;
-        ship.GetComponent<ShipBehaviour>().Start();
+        ship.GetComponent<ShipBehaviour>().BeginGame();
     }
     private void starInteract()
     {
