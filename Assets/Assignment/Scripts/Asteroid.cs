@@ -15,7 +15,8 @@ public class Asteroid : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector2 movement = new Vector2(transform.position.x, transform.position.y) - player.GetComponent<ShipBehaviour>().movement;
+        transform.position = movement;
     }
 
     bool CalculateDistance()

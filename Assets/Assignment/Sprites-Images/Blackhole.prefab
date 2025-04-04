@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1131036334625114262}
   - component: {fileID: 6600775581911028258}
+  - component: {fileID: 7054020415130184828}
   m_Layer: 0
   m_Name: Blackhole
   m_TagString: Untagged
@@ -84,3 +85,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7054020415130184828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785121722043095648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f0a9ff9a236a9e4fb61c6844a649337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  radius: 2
+  interact:
+    m_PersistentCalls:
+      m_Calls: []
