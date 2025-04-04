@@ -98,4 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  radius: 50
+  radius: 2
+  interact:
+    m_PersistentCalls:
+      m_Calls: []

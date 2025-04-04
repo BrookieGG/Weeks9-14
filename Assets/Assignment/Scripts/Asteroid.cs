@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Asteroid : MonoBehaviour
 {
     public GameObject player;
-    public float radius = 50;
+    public float radius = 2;
+    public UnityEvent interact;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,20 @@ public class Asteroid : MonoBehaviour
     {
         Vector2 movement = new Vector2(transform.position.x, transform.position.y) - player.GetComponent<ShipBehaviour>().movement;
         transform.position = movement;
+        if (CalculateDistance())
+        {
+            interact.Invoke();
+            Destroy(gameObject);
+        }
+    }
+
+    public void Subscribe()
+    {
+        ShipBehaviour shipScript = player.GetComponent<ShipBehaviour>();
+        if (shipScript != null)
+        {
+            interact.AddListener(shipScript.AsteroidEffect);
+        }
     }
 
     bool CalculateDistance()

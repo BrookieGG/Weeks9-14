@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
 public class Star : MonoBehaviour
 {
     public GameObject player;
     public float radius = 0.01f;
     public UnityEvent interact;
+    public GameObject effect;
+    
+    
     
     // Start is called before the first frame update
     void Start()
     {
-
+       
     }
 
     // Update is called once per frame
@@ -22,8 +26,10 @@ public class Star : MonoBehaviour
         transform.position = movement;
         if (CalculateDistance())
         {
+            effect.SetActive (true);
             interact.Invoke();
             Destroy(gameObject);
+            
         }
     }
 
