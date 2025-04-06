@@ -11,13 +11,14 @@ GameObject:
   - component: {fileID: 4019017452223502094}
   - component: {fileID: 5453194854172814153}
   - component: {fileID: 6480439243024011772}
+  - component: {fileID: 1385436710893529974}
   m_Layer: 0
   m_Name: StarEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4019017452223502094
 Transform:
   m_ObjectHideFlags: 0
@@ -4830,3 +4831,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1385436710893529974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6276799184099151840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c382d76318954148bd2a4d8c1120aff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 1

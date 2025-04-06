@@ -14,6 +14,9 @@ public class ShipBehaviour : MonoBehaviour
     private IEnumerator spawnObject;
     private int scoreValue = 0;
     private float TimeValue = 30;
+    private GameObject[] obstacles = new GameObject[100]; //arrays https://docs.unity3d.com/2020.1/Documentation/ScriptReference/Array.html
+    private int counter = 0;
+    private bool isStarted = false;
 
     public float t;
     public float timeToSpawn = 5;
@@ -31,6 +34,7 @@ public class ShipBehaviour : MonoBehaviour
     public GameObject GameOver;
     public GameObject Restart;
     public GameObject Effect;
+    public GameObject BonusEffect;
 
 
     // Start is called before the first frame update
@@ -44,6 +48,7 @@ public class ShipBehaviour : MonoBehaviour
     void Update()
     {
         movement = new Vector2();
+        Vector3 rot = new Vector3();
         if (Input.GetAxis("Horizontal") < 0)
         {
             movement.x -= moveSpeed * Time.deltaTime;
@@ -62,26 +67,55 @@ public class ShipBehaviour : MonoBehaviour
         {
             movement.y += moveSpeed * Time.deltaTime;
         }
-
-
-        //Rotate the ship based on the way its moving
-        
-
-        //Ship position stays on screen vertically
-        Vector3 clampedPosition = transform.position;
-        clampedPosition.y = Mathf.Clamp(clampedPosition.y, -4.5f, 4.5f);
-        transform.position = clampedPosition;
-
-        if (TimeValue > 0)
+        if (movement.x > 0 && movement.y > 0) //top right
         {
-            TimeValue -= Time.deltaTime;
-            Timer.text = "Time: " + Mathf.FloorToInt(TimeValue);
+            rot.z = -45f;
+        }
+        else if (movement.y > 0 && movement.x < 0) //top left
+        {
+            rot.z = 45f;
+        }
+        else if (movement.y < 0 && movement.x > 0) //bottom right
+        {
+            rot.z = -135f;
+        }
+        else if (movement.y < 0 && movement.x < 0) //bottom left
+        {
+            rot.z = 135f;
+        }
+        else if (movement.x < 0) //left
+        {
+            rot.z = 90;
+        }
+        else if (movement.x > 0) //right
+        {
+            rot.z = -90;
+        }
+        else if (movement.y < 0) //down
+        {
+            rot.z = 180;
+        }
+        else
+        {
+            rot.z = 0; //up
         }
 
-        if (TimeValue < 0)
-        {
-            Timer.text = "Time: 0";
-            EndGame();
+        transform.eulerAngles = rot;
+
+       
+        if (isStarted)
+        { 
+            if (TimeValue > 0)
+            {
+                TimeValue -= Time.deltaTime;
+                Timer.text = "Time: " + Mathf.FloorToInt(TimeValue);
+            }
+
+            else
+            {
+                Timer.text = "Time: 0";
+                EndGame();
+            }
         }
 
     }
@@ -89,19 +123,22 @@ public class ShipBehaviour : MonoBehaviour
     public void BeginGame()
     {
         starEvent.AddListener(starInteract);
+        asteroidEvent.AddListener(AsteroidEffect);  
         blackholeEvent.AddListener(EndGame);
         obstacleSpawn = StartCoroutine(SpawnTheObstacles());
     }
     public void Launch()
     {
+        ship.transform.position = new Vector2(0, 0);
         ship.GetComponent<ShipBehaviour>().enabled = true;
         ship.GetComponent<ShipBehaviour>().BeginGame();
+        isStarted = true;
     }
     private void starInteract()
     {
-        
         scoreValue += 1;
         score.text = "Score: " + scoreValue;
+        Bonus();
     }
 
     void EndGame()
@@ -114,17 +151,31 @@ public class ShipBehaviour : MonoBehaviour
 
     public void RestartGame()
     {
-        //restart game
+        for(int i = 0; i < obstacles.Length; i++)
+        {
+            Destroy(obstacles[i]);
+            ship.transform.position = new Vector2(0, -2.9f);
 
-        BeginGame();
+        }
+        GameOver.SetActive(false);
+        Restart.SetActive(false);
+        TimeValue = 30;
+        isStarted = false;
+        //launch button shows up
     }
     public void AsteroidEffect()
     {
-
         scoreValue -= 1;
         score.text = "Score: " + scoreValue;
     }
 
+    public void Bonus()
+    {
+        if (scoreValue % 5 == 0)
+        {
+            Instantiate(BonusEffect, transform.position, Quaternion.identity);
+        }
+    }
 
     private IEnumerator SpawnTheObstacles()
     {
@@ -154,7 +205,7 @@ public class ShipBehaviour : MonoBehaviour
             GameObject spawned = Instantiate(star, spawnTransform, Quaternion.identity);
             spawned.GetComponent<Star>().player = ship;
             spawned.GetComponent<Star>().interact = starEvent;
-           
+            obstacles[counter] = spawned;
 
         }
         else if (currentSpawn == 1)
@@ -162,8 +213,7 @@ public class ShipBehaviour : MonoBehaviour
             GameObject spawned = Instantiate(asteroid, spawnTransform, Quaternion.identity);
             spawned.GetComponent<Asteroid>().player = ship;
             spawned.GetComponent<Asteroid>().interact = asteroidEvent;
-            spawned.GetComponent<Asteroid>().Subscribe();
-          
+            obstacles[counter] = spawned;
         }
         else 
         {
@@ -171,9 +221,9 @@ public class ShipBehaviour : MonoBehaviour
             spawned.GetComponent<Blackhole>().player = ship;
             spawned.GetComponent<Blackhole>().interact = blackholeEvent;
             spawned.GetComponent<Blackhole>().Subscribe();
-            
+            obstacles[counter] = spawned;
         }
-
+        counter++;
 
 
         currentSpawn = (currentSpawn + 1)%3;

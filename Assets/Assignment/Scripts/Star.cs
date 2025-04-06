@@ -28,6 +28,7 @@ public class Star : MonoBehaviour
         {
             effect.SetActive (true);
             interact.Invoke();
+            Instantiate(effect, transform.position, Quaternion.identity);
             Destroy(gameObject);
             
         }

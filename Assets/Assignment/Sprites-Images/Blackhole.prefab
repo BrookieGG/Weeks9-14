@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1131036334625114262}
   - component: {fileID: 6600775581911028258}
   - component: {fileID: 7054020415130184828}
+  - component: {fileID: 7592276906563518147}
   m_Layer: 0
   m_Name: Blackhole
   m_TagString: Untagged
@@ -102,3 +103,16 @@ MonoBehaviour:
   interact:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7592276906563518147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785121722043095648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72e06e1f95bac2d499d0b6305aea7715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallSpeed: 0.5

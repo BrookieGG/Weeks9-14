@@ -24,15 +24,7 @@ public class Asteroid : MonoBehaviour
             interact.Invoke();
             Destroy(gameObject);
         }
-    }
-
-    public void Subscribe()
-    {
-        ShipBehaviour shipScript = player.GetComponent<ShipBehaviour>();
-        if (shipScript != null)
-        {
-            interact.AddListener(shipScript.AsteroidEffect);
-        }
+       
     }
 
     bool CalculateDistance()
