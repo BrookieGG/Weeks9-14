@@ -44,7 +44,9 @@ public class ShipBehaviour : MonoBehaviour
     void Start()
     {
         this.enabled = false;
-        
+        starEvent.AddListener(starInteract);
+        asteroidEvent.AddListener(AsteroidEffect);
+        blackholeEvent.AddListener(EndGame);
     }
 
     // Update is called once per frame
@@ -139,9 +141,7 @@ public class ShipBehaviour : MonoBehaviour
 
     public void BeginGame()
     {
-        starEvent.AddListener(starInteract);
-        asteroidEvent.AddListener(AsteroidEffect);  
-        blackholeEvent.AddListener(EndGame);
+        
         obstacleSpawn = StartCoroutine(SpawnTheObstacles());
         launch.SetActive(false);
     }
