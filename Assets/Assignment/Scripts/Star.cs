@@ -24,12 +24,12 @@ public class Star : MonoBehaviour
     {
         Vector2 movement = new Vector2 (transform.position.x, transform.position.y) - player.GetComponent<ShipBehaviour>().movement;
         transform.position = movement;
-        if (CalculateDistance())
+        if (CalculateDistance()) //check distance
         {
             effect.SetActive (true);
-            interact.Invoke();
-            Instantiate(effect, transform.position, Quaternion.identity);
-            Destroy(gameObject);
+            interact.Invoke(); //triggers interaction that increases score
+            Instantiate(effect, transform.position, Quaternion.identity); //creates effect prefab where star was collected
+            Destroy(gameObject); //destroys after interaction
             
         }
     }
@@ -40,12 +40,13 @@ public class Star : MonoBehaviour
 
     bool CalculateDistance()
     {
+        //Distance equation
         float changeX = player.transform.position.x - transform.position.x;
         float changeY = player.transform.position.y - transform.position.y;
         //using 2D distance equation - https://en.wikipedia.org/wiki/Euclidean_distance
         float distance = Mathf.Sqrt(Mathf.Pow(changeX, 2) + Mathf.Pow(changeY, 2));
         Debug.Log(distance);
-        return distance < radius;
+        return distance < radius; //return if the ship is within the radius
         
     }
 }

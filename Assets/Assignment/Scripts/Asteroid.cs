@@ -19,20 +19,21 @@ public class Asteroid : MonoBehaviour
     {
         Vector2 movement = new Vector2(transform.position.x, transform.position.y) - player.GetComponent<ShipBehaviour>().movement;
         transform.position = movement;
-        if (CalculateDistance())
+        if (CalculateDistance())  //check distance
         {
-            interact.Invoke();
-            Destroy(gameObject);
+            interact.Invoke(); //triggers interaction that decreases score
+            Destroy(gameObject); //destroys after interaction
         }
        
     }
 
     bool CalculateDistance()
     {
+        //Distance equation
         float changeX = player.transform.position.x - transform.position.x;
         float changeY = player.transform.position.y - transform.position.y;
         //using 2D distance equation - https://en.wikipedia.org/wiki/Euclidean_distance
         float distance = Mathf.Sqrt(Mathf.Pow(changeX, 2) + Mathf.Pow(changeY,2));
-        return distance < radius;
+        return distance < radius; //return if the ship is within the radius
     }
 }

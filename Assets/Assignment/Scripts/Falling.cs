@@ -14,11 +14,13 @@ public class Fall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Move the object down based on fallSpeed
         transform.Translate(Vector2.down * fallSpeed * Time.deltaTime);
 
-        if (transform.position.y < -6f) // Adjust based on your camera bounds
+        //if the object is off the screen
+        if (transform.position.y < -6f)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); //destory prefab
         }
     }
 }
